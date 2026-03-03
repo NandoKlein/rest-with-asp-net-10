@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestWithASPNET10Erudio.Data.DTO;
 using RestWithASPNET10Erudio.Model;
 using RestWithASPNET10Erudio.Services;
 
@@ -20,6 +21,9 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<BookDTO>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get()
         {
             _logger.LogInformation("Fetching all books.");
@@ -27,6 +31,9 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get(long id)
         {
             _logger.LogInformation("Fetching book with Id {id}.", id);
@@ -40,7 +47,10 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Book book)
+        [ProducesResponseType(200, Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Post([FromBody] BookDTO book)
         {
             _logger.LogInformation("Creating new book: {title}.", book.Title);
             var createdBook = _bookSevices.Create(book);
@@ -53,7 +63,10 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Book book)
+        [ProducesResponseType(200, Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Put([FromBody] BookDTO book)
         {
             _logger.LogInformation("Updating book with Id {id}.", book.Id);
             var createdBook = _bookSevices.Update(book);
@@ -67,6 +80,9 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204, Type = typeof(BookDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _logger.LogInformation("Deleting book with Id {id}.", id);

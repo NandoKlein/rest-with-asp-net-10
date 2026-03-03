@@ -8,7 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddSerilogLogging();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddContentNegotiation();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenAPIConfig();
+builder.Services.AddSwaggerConfig();
+builder.Services.AddRouteConfig();
+
+builder.Services.AddCorsConfiguration(builder.Configuration);
 
 builder.Services.AddDatabaseConfiguration(builder.Configuration);
 
@@ -17,7 +24,6 @@ builder.Services.AddEvolveConfiguration(builder.Configuration, builder.Environme
 builder.Services.AddScoped<IPersonServices, PersonServicesImpl>();
 builder.Services.AddScoped<IBookServices, BookServicesImpl>();
 
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
 var app = builder.Build();
@@ -27,7 +33,12 @@ var app = builder.Build();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseRouting();
+app.UseCorsConfiguration(builder.Configuration);
 
 app.MapControllers();
+
+app.UseSwaggerSpecification();
+app.UseScalarConfiguration();
 
 app.Run();

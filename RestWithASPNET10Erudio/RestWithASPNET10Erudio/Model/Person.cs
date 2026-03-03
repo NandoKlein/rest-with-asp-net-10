@@ -1,16 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RestWithASPNET10Erudio.Model.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RestWithASPNET10Erudio.Model
 {
     [Table("person")]
-    public class Person
-    {
-        [Key]
-        [Column("id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
-
+    public class Person : BaseEntity
+    {     
         [Required]
         [Column("first_name", TypeName = "varchar(80)")]
         [MaxLength(80)]

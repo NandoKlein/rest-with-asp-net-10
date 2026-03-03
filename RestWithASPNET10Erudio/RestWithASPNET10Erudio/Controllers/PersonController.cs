@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using RestWithASPNET10Erudio.Data.DTO;
 using RestWithASPNET10Erudio.Model;
 using RestWithASPNET10Erudio.Services;
 
@@ -6,6 +8,7 @@ namespace RestWithASPNET10Erudio.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+   // [EnableCors("LocalPolicy")]
 
     public class PersonController : ControllerBase
     {
@@ -18,6 +21,9 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(200, Type = typeof(List<PersonDTO>))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get()
         {
             _logger.LogInformation("Fetching all people.");
@@ -25,6 +31,9 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(200, Type = typeof(PersonDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Get(long id)
         {
             _logger.LogInformation("Fetching person with Id {id}.", id);
@@ -38,7 +47,10 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        [ProducesResponseType(200, Type = typeof(PersonDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Post([FromBody] PersonDTO person)
         {
             _logger.LogInformation("Creating new person: {firstName}.", person.FirstName);
             var createdPerson = _personService.Create(person);
@@ -51,7 +63,10 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Person person)
+        [ProducesResponseType(200, Type = typeof(PersonDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        public IActionResult Put([FromBody] PersonDTO person)
         {
             _logger.LogInformation("Updating person with Id {id}.", person.Id);
             var createdPerson = _personService.Update(person);
@@ -65,6 +80,9 @@ namespace RestWithASPNET10Erudio.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204, Type = typeof(PersonDTO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
         public IActionResult Delete(long id)
         {
             _logger.LogInformation("Deleting person with Id {id}.", id);

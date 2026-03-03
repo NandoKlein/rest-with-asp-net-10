@@ -21,6 +21,6 @@ namespace RestWithASPNET10Erudio.Model
 
         [Required]
         [Column("launch_date", TypeName = "datetime2(6)")]        
-        public DateTime LaunchDate { get; set; }
+        public DateTime? LaunchDate { get; set; }
     }
 }
